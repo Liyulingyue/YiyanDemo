@@ -10,6 +10,11 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://yiyan.baidu.com"}})
 
 wordbook = []
+knowledge_book = [
+    '珍惜现在',
+    '面向未来',
+    '拼搏超越',
+]
 
 def make_json_response(data, status_code=200):
     response = make_response(json.dumps(data), status_code)
@@ -45,6 +50,12 @@ async def get_wordbook():
     """
     return make_json_response({"wordbook": wordbook})
 
+@app.route("/get_knowledge_book")
+async def get_knowledge_book():
+    """
+        获取知识之书的内容
+    """
+    return make_json_response({"knowledge_book": knowledge_book})
 
 @app.route("/generate_sentences", methods=['POST'])
 async def generate_sentences():
