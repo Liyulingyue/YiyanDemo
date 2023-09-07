@@ -16,7 +16,7 @@ demo文件结构如下所示：
   * 第一步：修改ai-plugin.json文件：
   ```
   "name_for_human": "单词本", ===>   不能重名，可改成"单词本_zhangsan"或者"单词本_1024"（平台内全局唯一标识）
-  "name_for_model": "单词本", ===>   不能重名，可改成"单词本_zhangsan"或者"单词本_1024"（平台内全局唯一标识）
+  "name_for_model": "wordbook", ===>   不能重名，可改成"wordbook_zhangsan"或者"单词本_1024"（平台内全局唯一标识）
   ```
   * 第二步：启动插件注册服务
 

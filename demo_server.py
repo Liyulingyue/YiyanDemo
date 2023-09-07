@@ -55,7 +55,7 @@ async def generate_sentences():
     number = min(number, len(wordbook))
     random_words = random.sample(wordbook, number)
     prompt = "利用英文单词（words）生成一个英文段落，要求这个段落不超过100个英文单词且必须全英文，" \
-             "并包含上述英文单词，同时是一个有逻辑且欢乐的童话故事"
+             "并包含上述英文单词，同时是一个有逻辑的句子"
     # API返回字段"prompt"有特殊含义：开发者可以通过调试它来调试输出效果
     return make_json_response({"words": random_words, "prompt": prompt})
 
