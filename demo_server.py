@@ -10,11 +10,6 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://yiyan.baidu.com"}})
 
 wordbook = []
-knowledge_book = [
-    '珍惜现在',
-    '面向未来',
-    '拼搏超越',
-]
 
 def make_json_response(data, status_code=200):
     response = make_response(json.dumps(data), status_code)
@@ -50,12 +45,6 @@ async def get_wordbook():
     """
     return make_json_response({"wordbook": wordbook})
 
-@app.route("/get_knowledge_book")
-async def get_knowledge_book():
-    """
-        获取知识之书的内容
-    """
-    return make_json_response({"knowledge_book": knowledge_book})
 
 @app.route("/generate_sentences", methods=['POST'])
 async def generate_sentences():
@@ -66,7 +55,7 @@ async def generate_sentences():
     number = min(number, len(wordbook))
     random_words = random.sample(wordbook, number)
     prompt = "利用英文单词（words）生成一个英文段落，要求这个段落不超过100个英文单词且必须全英文，" \
-             "并包含上述英文单词，同时是一个有逻辑且欢乐的童话故事"
+             "并包含上述英文单词，同时是一个有逻辑的句子"
     # API返回字段"prompt"有特殊含义：开发者可以通过调试它来调试输出效果
     return make_json_response({"words": random_words, "prompt": prompt})
 
