@@ -9,7 +9,7 @@ paths:
     /Get_Answer_of_Number:
         post:
             operationId: GetAnswerofNumber
-            summary: 根据给定的数字查询答案之书的内容，并且给出解释
+            summary: 打开答案之书特定一面，查看对应内容并且给出解释
             requestBody:
                 required: true
                 content:
@@ -41,7 +41,7 @@ paths:
                 type: string
     /Shuffle_Book:
         post:
-            operationId: shuffle_book
+            operationId: ShuffleBook
             summary: 随机刷新或重置答案之书
             responses:
                 "200":
@@ -55,6 +55,40 @@ paths:
                 mediaType: application/json
                 name: message
                 type: string
+    /Answer_Question_with_Number:
+        post:
+            operationId: AnswerQestionwithNumber
+            summary: 在用户有疑惑或者问题的时候，根据用户给定的数字，翻开答案之书，给出建议
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/InputQuestionandNums"
+            responses:
+                "200":
+                    description: 针对用户咨询的问题给出答复
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OutputMessage"
+    /Answer_Question_in_Random:
+        post:
+            operationId: AnswerQestioninRandom
+            summary: 在用户有疑惑或者问题的时候，随机翻开答案之书，给出建议
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/InputQuestion"
+            responses:
+                "200":
+                    description: 针对用户咨询的问题给出答复
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OutputMessage"
 components:
     schemas:
         InputNums:
@@ -64,6 +98,23 @@ components:
                 number:
                     type: integer
                     description: 获取输入的一个数字
+        InputQuestion:
+            type: object
+            required: [question]
+            properties:
+                question:
+                    type: string
+                    description: 想要咨询或者感到疑惑的问题
+        InputQuestionandNums:
+            type: object
+            required: [number, question]
+            properties:
+                number:
+                    type: integer
+                    description: 获取输入的一个数字
+                question:
+                    type: string
+                    description: 想要咨询或者感到疑惑的问题
         OutputMessage:
             type: object
             required: [message]
