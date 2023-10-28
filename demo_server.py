@@ -39,18 +39,6 @@ async def IntroduceBook():
     """
     return make_json_response({"message": IntroduceText})
 
-@app.route("/Get_Answer_of_Number", methods=['POST'])
-async def GetAnswerofNumber():
-    """
-        输入一个数字，查询答案之书的内容
-    """
-    num = request.json.get('number', "")
-    if int(num) < 1 or int(num) > 268:
-        return make_json_response({"message": "超出了答案之书的页码范围，请重新输入"})
-    answer = answerBook[str(num)]
-    prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释"
-    return make_json_response({"message": answer, "prompt":prompt})
-
 @app.route("/Shuffle_Book", methods=['POST'])
 async def ShuffleBook():
     """
@@ -81,10 +69,10 @@ async def GetQuestionandFindThreeAnswers():
     # return make_json_response({"message": answer, "question":question, "prompt":prompt})
     return make_json_response({"message": "答案之书根据你的问题，为你抽取了三个不同的选择，请选择答案。\n回复`第一个答案`即可查看第一个选择。"})
 
-@app.route("/Git_Choosed_Answer", methods=['POST'])
-async def GitChoosedAnswer():
+@app.route("/Get_Choosed_Answer", methods=['POST'])
+async def GetChoosedAnswer():
     """
-        在用户有疑惑或者问题的时候，随机翻开答案之书，抽取三个回复
+        答案之书抽取过答案后，用户给定数字翻看对应的答案与解释。
     """
     question = Question_and_tripe_Answer[0]
     idx = request.json.get('number', "")

@@ -22,28 +22,6 @@ paths:
                 mediaType: application/json
                 name: message
                 type: string
-    /Get_Answer_of_Number:
-        post:
-            operationId: GetAnswerofNumber
-            summary: 打开答案之书特定一面，查看对应内容并且给出解释
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/InputNums"
-            responses:
-                "200":
-                    description: 答案数据返回
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/OutputMessage"
-            x-return-raw:
-                description: 标记当前API请求的结果是否经过大模型，当name的值不空时，从插件结果中获取具体字段，类型必须string，直接返回，而不经过大模型。
-                mediaType: application/json
-                name: message
-                type: string
     /Shuffle_Book:
         post:
             operationId: ShuffleBook
@@ -82,7 +60,23 @@ paths:
                 mediaType: application/json
                 name: message
                 type: string
-
+    /Get_Choosed_Answer:
+        post:
+            operationId: GetChoosedAnswer
+            summary: 答案之书抽取过答案后，用户给定数字翻看对应的答案与解释。
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/InputNums"
+            responses:
+                "200":
+                    description: 针对用户咨询的问题给出答复
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OutputMessage"
 components:
     schemas:
         InputNums:
