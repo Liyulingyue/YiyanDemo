@@ -6,6 +6,22 @@ info:
 servers:
     - url: http://127.0.0.1:8082
 paths:
+    /Introduce_the_Book:
+        post:
+            operationId: IntroduceBook
+            summary: 给出答案之书的介绍和使用说明。
+            responses:
+                "200":
+                    description: 回执
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OutputMessage"
+            x-return-raw:
+                description: 标记当前API请求的结果是否经过大模型，当name的值不空时，从插件结果中获取具体字段，类型必须string，直接返回，而不经过大模型。
+                mediaType: application/json
+                name: message
+                type: string
     /Get_Answer_of_Number:
         post:
             operationId: GetAnswerofNumber
@@ -16,17 +32,6 @@ paths:
                     application/json:
                         schema:
                             $ref: "#/components/schemas/InputNums"
-            responses:
-                "200":
-                    description: 答案数据返回
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/OutputMessage"
-    /Get_Answer_in_Random:
-        post:
-            operationId: GetAnswerinRandom
-            summary: 随机翻开一页书本，对答案之书的内容进行解答
             responses:
                 "200":
                     description: 答案数据返回

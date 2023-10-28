@@ -20,6 +20,23 @@ def make_json_response(data, status_code=200):
     response.headers["Content-Type"] = "application/json"
     return response
 
+@app.route("/Introduce_the_Book", methods=['POST'])
+async def IntroduceBook():
+    """
+        给出答案之书的介绍和使用说明。
+    """
+    IntroduceText = f"""
+        答案之书内置了{MAX_PAGE_ID}个答案，当你感到迷茫的时候，可以随机抽取一个语句，指引你的选择。
+        
+        你可以通过以下对话方式，触发答案之书的不同功能：
+        1. `答案之书，刷新！`
+            刷新答案之书的答案排序。
+        2. `答案之书，翻开第66页。`
+            查看答案之书第66页的内容。
+        3. `答案之书，我是小帅，我很纠结要不要去跟小美表白，请帮帮我。`
+            答案之书会随机抽取一个结果，并且给你接下来的行动提示。
+    """
+    return make_json_response({"message": IntroduceText})
 
 @app.route("/Get_Answer_of_Number", methods=['POST'])
 async def GetAnswerofNumber():
@@ -32,17 +49,6 @@ async def GetAnswerofNumber():
     answer = answerBook[str(num)]
     prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释"
     return make_json_response({"message": answer, "prompt":prompt})
-
-@app.route("/Get_Answer_in_Random", methods=['POST'])
-async def GetAnswerinRandom():
-    """
-        随机翻开一页书本，对之书的内容进行解答
-    """
-    num = random.randint(MIN_PAGE_ID, MAX_PAGE_ID)
-    answer = answerBook[str(num)]
-    prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释"
-    return make_json_response({"message": answer, "prompt":prompt})
-    # return make_json_response({"message": answer})
 
 @app.route("/Shuffle_Book", methods=['POST'])
 async def ShuffleBook():
