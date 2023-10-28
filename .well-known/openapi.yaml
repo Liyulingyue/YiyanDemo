@@ -9,7 +9,7 @@ paths:
     /Introduce_the_Book:
         post:
             operationId: IntroduceBook
-            summary: 给出答案之书的介绍和使用说明。
+            summary: 展示答案之书的使用方法，可以通过`如何使用答案之书`，`答案之书的使用方法`等类似的语句触发。
             responses:
                 "200":
                     description: 回执
@@ -25,7 +25,7 @@ paths:
     /Get_Answer_of_Number:
         post:
             operationId: GetAnswerofNumber
-            summary: 打开答案之书特定一面，查看对应内容并且给出解释
+            summary: 输入一个数字，查询答案之书的内容
             requestBody:
                 required: true
                 content:
@@ -47,7 +47,7 @@ paths:
     /Shuffle_Book:
         post:
             operationId: ShuffleBook
-            summary: 随机刷新或重置答案之书
+            summary: 重置或者刷新答案之书的内容。当用户需要重排、乱序、刷新答案之书的内容时，触发此功能。
             responses:
                 "200":
                     description: 回执
@@ -63,7 +63,7 @@ paths:
     /Answer_Question_in_Random:
         post:
             operationId: AnswerQestioninRandom
-            summary: 在用户有疑惑或者问题的时候，随机翻开答案之书，给出建议
+            summary: 当用户有疑惑或者问题的时候，随机打开答案之书，给出建议。
             requestBody:
                 required: true
                 content:

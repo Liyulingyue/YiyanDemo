@@ -23,16 +23,18 @@ def make_json_response(data, status_code=200):
 @app.route("/Introduce_the_Book", methods=['POST'])
 async def IntroduceBook():
     """
-        给出答案之书的介绍和使用说明。
+        展示答案之书的使用方法，可以通过`如何使用答案之书`，`答案之书的使用方法`等类似的语句触发。
     """
     IntroduceText = f"""
         答案之书内置了{MAX_PAGE_ID}个答案，当你感到迷茫的时候，可以随机抽取一个语句，指引你的选择。
         
         你可以通过以下对话方式，触发答案之书的不同功能：
+        0. `展示答案之书的使用方法`
+            展示答案之书的使用方法，和各个功能的触发样例语句。
         1. `答案之书，刷新！`
             刷新答案之书的答案排序。
-        2. `答案之书，翻开第66页。`
-            查看答案之书第66页的内容。
+        2. `答案之书第79面`
+            查看答案之书第79页的内容。
         3. `答案之书，我是小帅，我很纠结要不要去跟小美表白，请帮帮我。`
             答案之书会随机抽取一个结果，并且给你接下来的行动提示。
     """
@@ -41,7 +43,7 @@ async def IntroduceBook():
 @app.route("/Get_Answer_of_Number", methods=['POST'])
 async def GetAnswerofNumber():
     """
-        输入一个数字，查询答案之书的内容
+        翻开答案之书的某一面，查看对应结果。
     """
     num = request.json.get('number', "")
     if int(num) < 1 or int(num) > 268:
@@ -53,7 +55,7 @@ async def GetAnswerofNumber():
 @app.route("/Shuffle_Book", methods=['POST'])
 async def ShuffleBook():
     """
-        对书本中的内容进行乱序组合
+        重置或者刷新答案之书的内容。当用户需要重排、乱序、刷新答案之书的内容时，触发此功能。
     """
     mylist = list(range(MIN_PAGE_ID, MAX_PAGE_ID+1))
     random.shuffle(mylist)
@@ -68,12 +70,13 @@ async def ShuffleBook():
 @app.route("/Answer_Question_in_Random", methods=['POST'])
 async def AnswerQestioninRandom():
     """
-        在用户有疑惑或者问题的时候，随机翻开答案之书，给出建议
+        当用户有疑惑或者问题的时候，随机打开答案之书，给出建议。
     """
     num = random.randint(MIN_PAGE_ID, MAX_PAGE_ID)
     question = request.json.get('question', "")
     answer = answerBook[str(num)]
-    prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释，并针对用户困惑或疑问的事情(question)给出详细建议。"
+    # prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释，并针对用户困惑或疑问的事情(question)给出非常详细建议。"
+    prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。"
     return make_json_response({"message": answer, "question":question, "prompt":prompt})
 
 

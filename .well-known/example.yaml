@@ -1,0 +1,57 @@
+version: 0.0.1
+examples:
+      - context: # 对话历史
+          - role: user
+            content: 答案之书！刷新！
+          - role: bot
+            # 触发插件
+            plugin:
+              # 应当触发的接口operationId
+              operationId: ShuffleBook
+              # 思考过程，对触发有帮助
+              thoughts: 需要刷新答案之书的内容
+              requestArguments:
+                query: 答案之书！刷新！
+          - role: user
+            content: 答案之书的使用说明
+          - role: bot
+            # 触发插件
+            plugin:
+              # 应当触发的接口operationId
+              operationId: IntroduceBook
+              # 思考过程，对触发有帮助
+              thoughts: 用户希望获取插件答案之书的使用说明
+              requestArguments:
+                query: 展示答案之书的使用方法
+          - role: user
+            content: 答案之书，我是小帅，我很纠结要不要去跟小美表白，请帮帮我。
+          - role: bot
+            # 触发插件
+            plugin:
+              # 应当触发的接口operationId
+              operationId: AnswerQestioninRandom
+              # 思考过程，对触发有帮助
+              thoughts: 用户有困扰，需要获取答案之书的解答
+              requestArguments:
+                question: "要不要去跟小美表白"
+                query: 需要答案之书帮忙解答
+          - role: user
+            content: 答案之书，翻开第66页
+          - role: bot
+            # 触发插件
+            plugin:
+              # 应当触发的接口operationId
+              operationId: GetAnswerofNumber
+              # 思考过程，对触发有帮助
+              thoughts: 用户想知道答案之书第66面的内容
+              requestArguments:
+                number: 66
+                query: 查看答案之书第66面的内容
+      # 反例，无需触发此插件的任一某个接口
+      - context:
+          - role: user
+            content: 今天天气怎么样？
+          - role: bot
+            # 无需触发
+            plugin:
+              thoughts: 我不需要使用以上工具
