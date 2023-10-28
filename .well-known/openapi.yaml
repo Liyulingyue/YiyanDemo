@@ -55,23 +55,6 @@ paths:
                 mediaType: application/json
                 name: message
                 type: string
-    /Answer_Question_with_Number:
-        post:
-            operationId: AnswerQestionwithNumber
-            summary: 在用户有疑惑或者问题的时候，根据用户给定的数字，翻开答案之书，给出建议
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/InputQuestionandNums"
-            responses:
-                "200":
-                    description: 针对用户咨询的问题给出答复
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/OutputMessage"
     /Answer_Question_in_Random:
         post:
             operationId: AnswerQestioninRandom

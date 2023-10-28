@@ -59,19 +59,6 @@ async def ShuffleBook():
         answerBook[str(target_id)] = tmp
     return make_json_response({"message": "书本已重置。"})
 
-@app.route("/Answer_Question_with_Number", methods=['POST'])
-async def AnswerQestionwithNumber():
-    """
-        在用户有疑惑或者问题的时候，根据用户给定的数字，翻开答案之书，给出建议
-    """
-    num = request.json.get('number', "")
-    question = request.json.get('question', "")
-    if int(num) < 1 or int(num) > 268:
-        return make_json_response({"message": "超出了答案之书的页码范围，请重新输入"})
-    answer = answerBook[str(num)]
-    prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释，并针对用户困惑或疑问的事情(question)给出详细建议。"
-    return make_json_response({"message": answer, "question":question, "prompt":prompt})
-
 @app.route("/Answer_Question_in_Random", methods=['POST'])
 async def AnswerQestioninRandom():
     """
