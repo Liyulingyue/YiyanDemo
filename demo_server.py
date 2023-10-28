@@ -24,7 +24,7 @@ def make_json_response(data, status_code=200):
 @app.route("/Introduce_the_Book", methods=['POST'])
 async def IntroduceBook():
     """
-        给出答案之书的介绍和使用说明。
+        当用户请求答案之书的使用方式时，给出答案之书的使用方法。
     """
     IntroduceText = f"""
         答案之书内置了{MAX_PAGE_ID}个答案，当你感到迷茫的时候，可以随机抽取一个语句，指引你的选择。
