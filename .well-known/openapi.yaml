@@ -1,158 +1,70 @@
 openapi: 3.0.1
 info:
     title: 答案之书
-    description: 一本神奇的书，能够根据你的问题生成对应的解答，为你指点迷津。
+    description: 答案之书是一本神奇的书，能够根据你的问题或者困惑生成对应的解答，为你指点迷津。
     version: "v1"
 servers:
     - url: http://127.0.0.1:8082
 paths:
-    /findanswer:
+    /Get_Answer_of_Number:
         post:
-            operationId: getAnswer
-            summary: 从输入中提取一个数字，查询答案之书的内容
+            operationId: GetAnswerofNumber
+            summary: 根据给定的数字查询答案之书的内容，并且给出解释
             requestBody:
                 required: true
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/inputNum"
+                            $ref: "#/components/schemas/InputNums"
             responses:
                 "200":
                     description: 答案数据返回
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/getAnswer"
-    /randomanswer:
+                                $ref: "#/components/schemas/OutputMessage"
+    /Get_Answer_in_Random:
         post:
-            operationId: showrandomanswer
-            summary: 随机翻开一页书本，对之书的内容进行解答
+            operationId: GetAnswerinRandom
+            summary: 随机翻开一页书本，对答案之书的内容进行解答
             responses:
                 "200":
                     description: 答案数据返回
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/getAnswer"
-    /get_wordbook:
-        get:
-            operationId: getWordbook
-            summary: 展示单词列表
-            responses:
-                "200":
-                    description: 列表展示完成
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/getWordbook"
-    /generate_sentences:
-        post:        
-            operationId: generateSentences
-            summary: 背单词，生成句子
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/generateSentences"
-            responses:
-                "200":
-                    description: 句子生成成功
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/responseSentences"
-    /add_word:
+                                $ref: "#/components/schemas/OutputMessage"
+            x-return-raw:
+                description: 标记当前API请求的结果是否经过大模型，当name的值不空时，从插件结果中获取具体字段，类型必须string，直接返回，而不经过大模型。
+                mediaType: application/json
+                name: message
+                type: string
+    /Shuffle_Book:
         post:
-            operationId: addWord
-            summary: 在单词本中添加一个单词
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/addWord"
+            operationId: shuffle_book
+            summary: 随机刷新或重置答案之书
             responses:
                 "200":
-                    description: 单词添加成功
+                    description: 回执
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/messageResponse"
-    /delete_word:
-        delete:
-            operationId: deleteWord
-            summary: 从单词本中删除一个单词
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/deleteWord"
-            responses:
-                "200":
-                    description: 单词删除成功
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/messageResponse"
-
+                                $ref: "#/components/schemas/OutputMessage"
+            x-return-raw:
+                description: 标记当前API请求的结果是否经过大模型，当name的值不空时，从插件结果中获取具体字段，类型必须string，直接返回，而不经过大模型。
+                mediaType: application/json
+                name: message
+                type: string
 components:
     schemas:
-        inputNum:
+        InputNums:
             type: object
             required: [number]
             properties:
                 number:
                     type: integer
                     description: 获取输入的一个数字
-        getAnswer:
-            type: object
-            required: [message]
-            properties:
-                message:
-                    type: string
-                    description: 回复信息
-        getWordbook:
-            type: object
-            required: [wordbook]
-            properties:
-                wordbook:
-                    type: array
-                    items:
-                        type: string
-                    description: 单词本单词列表
-        addWord:
-            type: object
-            required: [word]
-            properties:
-                word:
-                    type: string
-                    description: 需要添加到单词本中的一个单词
-        deleteWord:
-            type: object
-            required: [word]
-            properties:
-                word:
-                    type: string
-                    description: 需要删除的单词
-        generateSentences:
-            type: object
-            required: [word_number]
-            properties:
-                word_number:
-                    type: integer
-                    description: 几个单词
-        responseSentences:
-            type: object
-            required: [words]
-            properties:
-                words:
-                    type: array
-                    items:
-                        type: string
-                        description: 随机抽取的英文单词
-        messageResponse:
+        OutputMessage:
             type: object
             required: [message]
             properties:

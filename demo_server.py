@@ -14,7 +14,6 @@ with open("answersbook.json", "r", encoding='utf-8') as f:
 MIN_PAGE_ID = 1
 MAX_PAGE_ID = 268
 
-wordbook = []
 
 def make_json_response(data, status_code=200):
     response = make_response(json.dumps(data), status_code)
@@ -22,8 +21,8 @@ def make_json_response(data, status_code=200):
     return response
 
 
-@app.route("/findanswer", methods=['POST'])
-async def findanswer():
+@app.route("/Get_Answer_of_Number", methods=['POST'])
+async def GetAnswerofNumber():
     """
         输入一个数字，查询答案之书的内容
     """
@@ -34,8 +33,8 @@ async def findanswer():
     prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释"
     return make_json_response({"message": answer, "prompt":prompt})
 
-@app.route("/randomanswer", methods=['POST'])
-async def randomanswer():
+@app.route("/Get_Answer_in_Random", methods=['POST'])
+async def GetAnswerinRandom():
     """
         随机翻开一页书本，对之书的内容进行解答
     """
@@ -43,50 +42,22 @@ async def randomanswer():
     answer = answerBook[str(num)]
     prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释"
     return make_json_response({"message": answer, "prompt":prompt})
+    # return make_json_response({"message": answer})
 
-
-@app.route("/add_word", methods=['POST'])
-async def add_word():
+@app.route("/Shuffle_Book", methods=['POST'])
+async def ShuffleBook():
     """
-        添加一个单词
+        对书本中的内容进行乱序组合
     """
-    word = request.json.get('word', "")
-    wordbook.append(word)
-    return make_json_response({"message": "单词添加成功"})
-
-
-@app.route("/delete_word", methods=['DELETE'])
-async def delete_word():
-    """
-        删除一个单词
-    """
-    word = request.json.get('word', "")
-    if word in wordbook:
-        wordbook.remove(word)
-    return make_json_response({"message": "单词删除成功"})
-
-
-@app.route("/get_wordbook")
-async def get_wordbook():
-    """
-        获得单词本
-    """
-    return make_json_response({"wordbook": wordbook})
-
-
-@app.route("/generate_sentences", methods=['POST'])
-async def generate_sentences():
-    """
-        生成句子
-    """
-    number = request.get_json()['word_number']
-    number = min(number, len(wordbook))
-    random_words = random.sample(wordbook, number)
-    prompt = "利用英文单词（words）生成一个英文段落，要求这个段落不超过100个英文单词且必须全英文，" \
-             "并包含上述英文单词，同时是一个有逻辑的句子"
-    # API返回字段"prompt"有特殊含义：开发者可以通过调试它来调试输出效果
-    return make_json_response({"words": random_words, "prompt": prompt})
-
+    mylist = list(range(MIN_PAGE_ID, MAX_PAGE_ID+1))
+    random.shuffle(mylist)
+    for i in range(MIN_PAGE_ID, MAX_PAGE_ID+1):
+        source_id = i
+        target_id = mylist[i-1]
+        tmp = answerBook[str(source_id)]
+        answerBook[str(source_id)] = answerBook[str(target_id)]
+        answerBook[str(target_id)] = tmp
+    return make_json_response({"message": "书本已重置。"})
 
 @app.route("/logo.png")
 async def plugin_logo():
