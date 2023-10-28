@@ -60,10 +60,10 @@ paths:
                 mediaType: application/json
                 name: message
                 type: string
-    /Answer_Question_in_Random:
+    /Get_Question_and_Find_Three_Answers:
         post:
-            operationId: AnswerQestioninRandom
-            summary: 在用户有疑惑或者问题的时候，随机翻开答案之书，给出建议
+            operationId: GetQuestionandFindThreeAnswers
+            summary: 在用户有疑惑或者问题的时候，随机翻开答案之书，抽取三个回复
             requestBody:
                 required: true
                 content:
@@ -72,11 +72,17 @@ paths:
                             $ref: "#/components/schemas/InputQuestion"
             responses:
                 "200":
-                    description: 针对用户咨询的问题给出答复
+                    description: 回执
                     content:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/OutputMessage"
+            x-return-raw:
+                description: 标记当前API请求的结果是否经过大模型，当name的值不空时，从插件结果中获取具体字段，类型必须string，直接返回，而不经过大模型。
+                mediaType: application/json
+                name: message
+                type: string
+
 components:
     schemas:
         InputNums:

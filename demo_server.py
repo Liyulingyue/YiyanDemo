@@ -13,6 +13,7 @@ with open("answersbook.json", "r", encoding='utf-8') as f:
     answerBook = json.load(f)
 MIN_PAGE_ID = 1
 MAX_PAGE_ID = 268
+Question_and_tripe_Answer = ["","","",""]
 
 
 def make_json_response(data, status_code=200):
@@ -65,17 +66,31 @@ async def ShuffleBook():
         answerBook[str(target_id)] = tmp
     return make_json_response({"message": "书本已重置。"})
 
-@app.route("/Answer_Question_in_Random", methods=['POST'])
-async def AnswerQestioninRandom():
+@app.route("/Get_Question_and_Find_Three_Answers", methods=['POST'])
+async def GetQuestionandFindThreeAnswers():
     """
-        在用户有疑惑或者问题的时候，随机翻开答案之书，给出建议
+        在用户有疑惑或者问题的时候，随机翻开答案之书，抽取三个回复
     """
-    num = random.randint(MIN_PAGE_ID, MAX_PAGE_ID)
+    for i in range(1,4):
+        num = random.randint(MIN_PAGE_ID, MAX_PAGE_ID)
+        answer = answerBook[str(num)]
+        Question_and_tripe_Answer[i] = answer
     question = request.json.get('question', "")
-    answer = answerBook[str(num)]
+    Question_and_tripe_Answer[0] = question
+    # prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释，并针对用户困惑或疑问的事情(question)给出详细建议。"
+    # return make_json_response({"message": answer, "question":question, "prompt":prompt})
+    return make_json_response({"message": "答案之书根据你的问题，为你抽取了三个不同的选择，请选择答案。\n回复`第一个答案`即可查看第一个选择。"})
+
+@app.route("/Git_Choosed_Answer", methods=['POST'])
+async def GitChoosedAnswer():
+    """
+        在用户有疑惑或者问题的时候，随机翻开答案之书，抽取三个回复
+    """
+    question = Question_and_tripe_Answer[0]
+    idx = request.json.get('number', "")
+    answer = Question_and_tripe_Answer[idx]
     prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释，并针对用户困惑或疑问的事情(question)给出详细建议。"
     return make_json_response({"message": answer, "question":question, "prompt":prompt})
-
 
 @app.route("/logo.png")
 async def plugin_logo():
