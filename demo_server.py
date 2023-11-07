@@ -111,12 +111,9 @@ async def openapi_spec():
         text = f.read()
         return text, 200, {"Content-Type": "text/yaml"}
 
-
-
-
 @app.route('/')
 def index():
     return 'welcome to my webpage!'
 
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=8082)
+    app.run(debug=True, host='0.0.0.0', port=8082)

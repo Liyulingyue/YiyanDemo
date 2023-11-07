@@ -4,7 +4,7 @@ info:
     description: 答案之书是一本神奇的书，能够根据你的问题或者困惑生成对应的解答，为你指点迷津。
     version: "v1"
 servers:
-    - url: http://127.0.0.1:8082
+    - url: http://47.113.229.180:8082
 paths:
     /Introduce_the_Book:
         post:
