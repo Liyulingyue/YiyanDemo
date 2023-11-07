@@ -36,17 +36,17 @@ examples:
                 question: "要不要去跟小美表白"
                 query: 需要答案之书帮忙解答
           - role: user
-            content: 答案之书，翻开第66页
+            content: 答案之书，我今天要不要点外卖
           - role: bot
             # 触发插件
             plugin:
               # 应当触发的接口operationId
-              operationId: GetAnswerofNumber
+              operationId: AnswerQestioninRandom
               # 思考过程，对触发有帮助
-              thoughts: 用户想知道答案之书第66面的内容
+              thoughts: 用户有问题，想咨询答案之书
               requestArguments:
-                number: 66
-                query: 查看答案之书第66面的内容
+                question: "今天要不要点外卖"
+                query: 需要答案之书帮忙解答
       # 反例，无需触发此插件的任一某个接口
       - context:
           - role: user

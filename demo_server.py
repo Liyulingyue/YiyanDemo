@@ -56,13 +56,17 @@ async def ShuffleBook():
 @app.route("/Answer_Question_in_Random", methods=['POST'])
 async def AnswerQestioninRandom():
     """
-        当用户有疑惑或者问题的时候，随机打开答案之书，给出建议。例如，`答案之书，我今晚要不要点外卖。`时需要触发此插件。
+        当用户向答案之书提问时或者感到困惑向答案之书咨询时，随机打开答案之书，给出建议。
+        一些使用样例：
+        答案之书，我应该点外卖吗？
+        答案之书，请告诉我今晚去公园合不合适
+        答案之书，我很纠结，请告诉我该不该向小美表白
     """
     num = random.randint(MIN_PAGE_ID, MAX_PAGE_ID)
     question = request.json.get('question', "")
     answer = answerBook[str(num)]
     # prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，对用户困惑或疑问的事情(question)给出非常详细建议。"
-    prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。最终以json的形式回复用户{‘答案之书的内容’：message，'解释说明'：一言生成的结果}。"
+    prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。最终以json的形式回复用户{‘答案’：答案之书的答案，'解释说明'：一言生成的结果}。"
     return make_json_response({"message": answer, "question":question, "prompt":prompt})
 
 
