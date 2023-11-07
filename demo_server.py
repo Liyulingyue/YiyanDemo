@@ -33,24 +33,10 @@ async def IntroduceBook():
             展示答案之书的使用方法，和各个功能的触发样例语句。
         1. `答案之书，刷新！`
             刷新答案之书的答案排序。
-        2. `答案之书第79面`
-            查看答案之书第79页的内容。
-        3. `答案之书，我是小帅，我很纠结要不要去跟小美表白，请帮帮我。`
+        2. `答案之书，我是小帅，我很纠结要不要去跟小美表白，请帮帮我。`
             答案之书会随机抽取一个结果，并且给你接下来的行动提示。
     """
     return make_json_response({"message": IntroduceText})
-
-@app.route("/Get_Answer_of_Number", methods=['POST'])
-async def GetAnswerofNumber():
-    """
-        翻开答案之书的某一面，查看对应结果。
-    """
-    num = request.json.get('number', "")
-    if int(num) < 1 or int(num) > 268:
-        return make_json_response({"message": "超出了答案之书的页码范围，请重新输入"})
-    answer = answerBook[str(num)]
-    prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释"
-    return make_json_response({"message": answer, "prompt":prompt})
 
 @app.route("/Shuffle_Book", methods=['POST'])
 async def ShuffleBook():
@@ -70,13 +56,13 @@ async def ShuffleBook():
 @app.route("/Answer_Question_in_Random", methods=['POST'])
 async def AnswerQestioninRandom():
     """
-        当用户有疑惑或者问题的时候，随机打开答案之书，给出建议。
+        当用户有疑惑或者问题的时候，随机打开答案之书，给出建议。例如，`答案之书，我今晚要不要点外卖。`时需要触发此插件。
     """
     num = random.randint(MIN_PAGE_ID, MAX_PAGE_ID)
     question = request.json.get('question', "")
     answer = answerBook[str(num)]
-    # prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，生成一段不超过100字的含义解释，并针对用户困惑或疑问的事情(question)给出非常详细建议。"
-    prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。"
+    # prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，对用户困惑或疑问的事情(question)给出非常详细建议。"
+    prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。最终以json的形式回复用户{‘答案之书的内容’：message，'解释说明'：一言生成的结果}。"
     return make_json_response({"message": answer, "question":question, "prompt":prompt})
 
 
