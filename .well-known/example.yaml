@@ -2,27 +2,17 @@ version: 0.0.1
 examples:
       - context: # 对话历史
           - role: user
-            content: 答案之书！刷新！
+            content: 答案之书，我有个问题，今晚该不该加班
           - role: bot
             # 触发插件
             plugin:
               # 应当触发的接口operationId
-              operationId: ShuffleBook
+              operationId: AnswerQestioninRandom
               # 思考过程，对触发有帮助
-              thoughts: 需要刷新答案之书的内容
+              thoughts: 用户有困扰，需要获取答案之书的解答
               requestArguments:
-                query: 答案之书！刷新！
-          - role: user
-            content: 答案之书的使用说明
-          - role: bot
-            # 触发插件
-            plugin:
-              # 应当触发的接口operationId
-              operationId: IntroduceBook
-              # 思考过程，对触发有帮助
-              thoughts: 用户希望获取插件答案之书的使用说明
-              requestArguments:
-                query: 展示答案之书的使用方法
+                question: "今晚该不该加班"
+                query: 需要答案之书帮忙解答
           - role: user
             content: 答案之书，我是小帅，我很纠结要不要去跟小美表白，请帮帮我。
           - role: bot
