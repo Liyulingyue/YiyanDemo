@@ -1,9 +1,9 @@
 {
     "schema_version": "v1",
-    "name_for_human": "答案之书_zyq",
-    "name_for_model": "Book_of_Answer_zyq",
-    "description_for_human": "一本神奇的书，能够根据你的问题生成对应的解答，为你指点迷津。",
-    "description_for_model": "一本神奇的书本，能够根据你的问题生成对应的解答，为你指点迷津。",
+    "name_for_human": "答案之书",
+    "name_for_model": "Book_of_Answer",
+    "description_for_human": "答案之书能够根据你的问题或者困惑生成对应的解答，为你指点迷津。快对我说“答案之书，我有个问题，<你的问题>”。",
+    "description_for_model": "答案之书能够根据你的问题或者困惑生成对应的解答，为你指点迷津。快对我说“答案之书，我有个问题，<你的问题>”。",
     "auth": {
         "type": "none"
     },
