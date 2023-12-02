@@ -13,5 +13,8 @@
     },
     "logo_url": "http://47.113.229.180:8082/logo.png",
     "contact_email": "support@example.com",
-    "legal_info_url": "http://www.example.com/legal"
+    "legal_info_url": "http://www.example.com/legal",
+    "examples": {
+        "url": "http://47.113.229.180:8082/.well-known/examples.yaml"
+    }
 }
