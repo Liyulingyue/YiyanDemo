@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
-    title: 答案之书
+    title: 答案之书_AS
     description: 当⽤户提问“答案之书，我有个问题”时，根据⽤户的问题⽣成对应的解答。
     version: "v1"
 servers:
-    - url: http://47.113.229.180:8082
+    - url: https://aistudio.baidu.com/bd-cpu-02/user/608082/7196596/api_serving/8080
 paths:
     /Introduce_the_Book:
         post:
