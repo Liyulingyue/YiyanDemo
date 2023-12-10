@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
     title: 答案之书
-    description: 当⽤户提问“答案之书，我有个问题”时，根据⽤户的问题⽣成对应的解答。
+    description: 当你想要获取一些有启发性的回复的时候，对我说“答案之书，我有个问题，{你的问题，比如：今晚要不要跟小美表白}”，我会给你一个充满哲理的回复。
     version: "v1"
 servers:
     - url: http://47.113.229.180:8082
@@ -55,6 +55,11 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/OutputMessage"
+            x-return-raw:
+                description: 标记当前API请求的结果是否经过大模型，当name的值不空时，从插件结果中获取具体字段，类型必须string，直接返回，而不经过大模型。
+                mediaType: application/json
+                name: message
+                type: string
 components:
     schemas:
         InputNums:

@@ -2,7 +2,7 @@
     "schema_version": "v1",
     "name_for_human": "答案之书",
     "name_for_model": "Book_of_Answer",
-    "description_for_human": "答案之书能够根据你的问题或者困惑生成对应的解答，为你指点迷津。快对我说“答案之书，我有个问题，<你的问题>”。",
+    "description_for_human": "当你想要获取一些有启发性的回复的时候，对我说“答案之书，我有个问题，{你的问题}“，我会给你一个充满哲理的回复。",
     "description_for_model": "当⽤户提问“答案之书，我有个问题”时，根据⽤户的问题⽣成对应的解答",
     "auth": {
         "type": "none"

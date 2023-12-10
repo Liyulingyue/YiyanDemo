@@ -73,8 +73,9 @@ async def AnswerQestioninRandom():
     question = request.json.get('question', "")
     answer = answerBook[str(num)]
     # prompt = "答案之书中该数字对应的内容是(message)，根据答案之书中的答案(message)，对用户困惑或疑问的事情(question)给出非常详细建议。"
-    prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。最终以json的形式回复用户{‘答案’：答案之书的答案，'解释说明'：一言生成的结果}。"
-    return make_json_response({"message": answer, "question":question, "prompt":prompt})
+    # prompt = "根据答案之书中的答案(message)，针对用户困惑或疑问的事情(question)给出非常详细建议。最终以json的形式回复用户{‘答案’：答案之书的答案，'解释说明'：一言生成的结果}。"
+    # return make_json_response({"message": answer, "question":question, "prompt":prompt})
+    return make_json_response({"message": answer})
 
 
 @app.route("/logo.png")
